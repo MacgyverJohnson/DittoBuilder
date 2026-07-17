@@ -1,4 +1,4 @@
-name: Get Latest Ditto EXE
+name: Get Latest Ditto EXE 2
 
 on:
   workflow_dispatch:
