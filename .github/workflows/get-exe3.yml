@@ -1,0 +1,31 @@
+name: Get Latest Ditto EXE 3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet Packages
+      run: nuget restore CP_Main_10.sln
+
+    - name: Build 64-bit Release
+      run: msbuild CP_Main_10.sln /p:Configuration=Release /p:Platform=x64
+
+    - name: Upload Unsigned Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: Ditto-Latest-EXE
+        path: |
+          Release64/Ditto.exe
+          Release64/ICU_Loader.dll
+          Release64/Addins/DittoUtil.dll
+          
